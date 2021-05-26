@@ -1,5 +1,11 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
-
+trigger:
+- master
+  
 pool:
   vmImage: ubuntu-latest
 
@@ -16,13 +22,13 @@ steps:
     goals: 'package'
 # Maven
 - task: PublishBuildArtifacts@1
+- task: CopyFiles@2
+  inputs:
+    Contents: '**/*.war'
+    TargetFolder: 'Build.ArtifactStagingDirectory'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'warfile'
     publishLocation: 'Container'
-# Build your Java project and run tests with Apache Maven.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
-trigger:
-- master
+
